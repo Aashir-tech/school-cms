@@ -33,6 +33,7 @@ interface PasswordData {
 
 export default function ProfilePage() {
   const dispatch = useDispatch()
+  const [authFetch, setAuthFetch] = useState<any | null>(null)
   const { user } = useSelector((state: RootState) => state.auth)
   const [profileData, setProfileData] = useState<ProfileData>({
     name: user?.name || "",
@@ -48,7 +49,11 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false)
   const [changingPassword, setChangingPassword] = useState(false)
   const { toast } = useToast()
-  const authFetch = createAuthenticatedFetch()
+
+  useEffect(() => {
+    setAuthFetch(() => createAuthenticatedFetch())
+  }, [])
+  
 
   useEffect(() => {
     if (user) {

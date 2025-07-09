@@ -29,6 +29,8 @@ interface GalleryItem {
 
 export default function GalleryPage() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([])
+  const [authFetch, setAuthFetch] = useState<any | null>(null)
+
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [editingItem, setEditingItem] = useState<GalleryItem | null>(null)
@@ -37,9 +39,9 @@ export default function GalleryPage() {
     itemId: null,
   })
   const { toast } = useToast()
-  const authFetch = createAuthenticatedFetch()
 
   useEffect(() => {
+    setAuthFetch(() => createAuthenticatedFetch())
     fetchGalleryItems()
   }, [])
 
@@ -54,7 +56,7 @@ export default function GalleryPage() {
       toast({
         title: "Error",
         description: "Failed to fetch gallery items",
-        variant: "destructive",
+     
       })
     } finally {
       setLoading(false)
@@ -84,7 +86,7 @@ export default function GalleryPage() {
       toast({
         title: "Error",
         description: "Failed to save gallery item",
-        variant: "destructive",
+     
       })
     }
   }
@@ -107,8 +109,7 @@ export default function GalleryPage() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to delete gallery item",
-        variant: "destructive",
+        description: "Failed to delete gallery item"
       })
     } finally {
       setDeleteDialog({ open: false, itemId: null })

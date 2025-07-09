@@ -44,6 +44,7 @@ interface SiteSettings {
 }
 
 export default function SettingsPage() {
+  const [authFetch, setAuthFetch] = useState<any | null>(null)
   const [settings, setSettings] = useState<SiteSettings>({
     siteName: "",
     siteDescription: "",
@@ -72,9 +73,10 @@ export default function SettingsPage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const { toast } = useToast()
-  const authFetch = createAuthenticatedFetch()
+  
 
   useEffect(() => {
+    setAuthFetch(() => createAuthenticatedFetch())
     fetchSettings()
   }, [])
 

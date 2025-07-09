@@ -30,6 +30,8 @@ interface Testimonial {
 
 export default function TestimonialsPage() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
+  const [authFetch, setAuthFetch] = useState<any | null>(null)
+
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [editingTestimonial, setEditingTestimonial] = useState<Testimonial | null>(null)
@@ -38,9 +40,9 @@ export default function TestimonialsPage() {
     testimonialId: null,
   })
   const { toast } = useToast()
-  const authFetch = createAuthenticatedFetch()
 
   useEffect(() => {
+    setAuthFetch(() => createAuthenticatedFetch())
     fetchTestimonials()
   }, [])
 
