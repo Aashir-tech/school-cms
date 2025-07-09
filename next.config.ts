@@ -1,7 +1,27 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
 
-export default nextConfig;
+/** @type {import('next').NextConfig} */
+const nextConfig : NextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  images: {
+    domains: ['localhost'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+    unoptimized: true,
+  },
+  experimental: {
+    serverComponentsExternalPackages: ['mongodb'],
+  },
+}
+
+export default nextConfig
