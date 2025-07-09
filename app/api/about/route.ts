@@ -36,6 +36,8 @@ export async function PUT(request: NextRequest) {
 
     const { content, image } = await request.json()
 
+    console.log("Image",image);
+
     if (!content) {
       return createErrorResponse("Content is required", 400)
     }
