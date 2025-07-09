@@ -14,6 +14,7 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog"
 import { Spinner } from "@/components/ui/spinner"
 import { TeamMemberForm } from "@/components/admin/team-member-form"
 import Image from "next/image"
+import { AdminLayout } from "@/components/admin/layout"
 
 interface TeamMember {
   _id: string
@@ -121,13 +122,18 @@ export default function TeamPage() {
 
   if (loading) {
     return (
+      <AdminLayout>
+
       <div className="flex items-center justify-center h-64">
         <Spinner size="large" />
       </div>
+      </AdminLayout>
     )
   }
 
   return (
+    <AdminLayout>
+
     <div className="space-y-6">
       {/* Page Header */}
       <div className="flex justify-between items-center">
@@ -153,6 +159,7 @@ export default function TeamPage() {
                 <Button
                   size="sm"
                   variant="secondary"
+                  className="bg-blue-500"
                   onClick={() => {
                     setEditingMember(member)
                     setShowForm(true)
@@ -162,6 +169,7 @@ export default function TeamPage() {
                 </Button>
                 <Button
                   size="sm"
+                  className="bg-red-500"
                   variant="destructive"
                   onClick={() => setDeleteDialog({ open: true, memberId: member._id })}
                 >
@@ -270,5 +278,6 @@ export default function TeamPage() {
         variant="destructive"
       />
     </div>
+    </AdminLayout>
   )
 }
