@@ -4,8 +4,6 @@
  */
 import type { Metadata } from "next"
 import { AboutPageClient } from "@/components/public/about-page-client"
-import { PublicHeader } from "@/components/public/header"
-import { PublicFooter } from "@/components/public/footer"
 
 export const metadata: Metadata = {
   title: "About Us - School Name",

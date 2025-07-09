@@ -37,9 +37,9 @@ export default function ContactsPage() {
     messageId: null,
   })
   const { toast } = useToast()
-  const authFetch = createAuthenticatedFetch()
-
+  
   useEffect(() => {
+    const authFetch = createAuthenticatedFetch()
     fetchMessages()
   }, [])
 
