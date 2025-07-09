@@ -11,6 +11,7 @@ interface Testimonial {
   photo?: string;
   quote: string;
   rating?: number;
+  image:string;
   designation?: string;
   company?: string;
   isActive: boolean;
@@ -58,10 +59,10 @@ export function TestimonialsSection({
                     "{testimonial.quote}"
                   </blockquote>
                   <div className="flex items-center">
-                    {testimonial.photo && (
+                    {testimonial.image && (
                       <Image
                         src={
-                          testimonial.photo ||
+                          testimonial.image ||
                           "/placeholder.svg?height=48&width=48"
                         }
                         alt={testimonial.name}

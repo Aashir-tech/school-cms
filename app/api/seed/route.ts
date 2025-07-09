@@ -11,6 +11,7 @@ export async function GET(req: NextRequest) {
     await seedDatabase()
     return NextResponse.json({ success: true, message: "Seeding complete" })
   } catch (err) {
+    // @ts-ignore
     return NextResponse.json({ success: false, error: err.message }, { status: 500 })
   }
 }
