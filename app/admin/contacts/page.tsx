@@ -30,6 +30,7 @@ interface ContactMessage {
 
 export default function ContactsPage() {
   const [messages, setMessages] = useState<ContactMessage[]>([])
+  const [authFetch, setAuthFetch] = useState<any | null>(null)
   const [loading, setLoading] = useState(true)
   const [selectedMessage, setSelectedMessage] = useState<ContactMessage | null>(null)
   const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; messageId: string | null }>({
@@ -39,7 +40,7 @@ export default function ContactsPage() {
   const { toast } = useToast()
   
   useEffect(() => {
-    const authFetch = createAuthenticatedFetch()
+    setAuthFetch(() => createAuthenticatedFetch())
     fetchMessages()
   }, [])
 
