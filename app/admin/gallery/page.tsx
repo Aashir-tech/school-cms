@@ -47,7 +47,7 @@ export default function GalleryPage() {
 
   const fetchGalleryItems = async () => {
     try {
-      const response = await authFetch("/api/gallery")
+      const response = await fetch("/api/gallery")
       if (response.ok) {
         const data = await response.json()
         setGalleryItems(data.data || [])

@@ -48,7 +48,7 @@ export default function TestimonialsPage() {
 
   const fetchTestimonials = async () => {
     try {
-      const response = await authFetch("/api/testimonials")
+      const response = await fetch("/api/testimonials")
       if (response.ok) {
         const data = await response.json()
         setTestimonials(data.data || [])

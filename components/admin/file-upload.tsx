@@ -29,6 +29,7 @@ export function FileUpload({
   className,
 }: FileUploadProps) {
   const [uploading, setUploading] = useState(false)
+  const [publicId, setPublicId] = useState<string | null>(null)
   const [preview, setPreview] = useState<string | null>(currentImage || null)
   const { toast } = useToast()
 
@@ -42,6 +43,7 @@ export function FileUpload({
 
       const response = await fetch("/api/upload", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: formData,
       })
 
@@ -52,6 +54,7 @@ export function FileUpload({
       const data = await response.json()
       setPreview(data.url)
       onUpload(data.url)
+      setPublicId(data.public_id)
 
       toast({
         title: "Upload successful",
@@ -86,8 +89,22 @@ export function FileUpload({
   })
 
   // Remove current image
-  const removeImage = () => {
+  const removeImage = async () => {
+    if (publicId) {
+      try {
+        await fetch("/api/delete-image", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ public_id: publicId }),
+        })
+        console.log("Image deleted successfully")
+      } catch (err) {
+        console.error("Failed to delete image from Cloudinary:", err)
+      }
+    }
+
     setPreview(null)
+    setPublicId(null)
     onUpload("")
   }
 

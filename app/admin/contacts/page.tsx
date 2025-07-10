@@ -46,7 +46,7 @@ export default function ContactsPage() {
 
   const fetchMessages = async () => {
     try {
-      const response = await authFetch("/api/contact")
+      const response = await fetch("/api/contact")
       if (response.ok) {
         const data = await response.json()
         setMessages(data.data || [])

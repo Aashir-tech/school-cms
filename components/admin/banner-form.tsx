@@ -28,7 +28,7 @@ interface BannerFormProps {
   onCancel: () => void
 }
 
-export function BannerForm({ banner, onSave, onCancel }: BannerFormProps) {
+export function BannerForm({ banner, onSave,  onCancel }: BannerFormProps) {
   const [image, setImage] = useState(banner?.image || "")
 
   const {

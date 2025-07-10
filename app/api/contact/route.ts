@@ -2,10 +2,8 @@ import type { NextRequest } from "next/server"
 import { getDatabase } from "@/lib/mongo-db"
 import { authenticateRequest, createApiResponse, createErrorResponse } from "@/lib/api-helpers"
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    await authenticateRequest(request)
-
     const db = await getDatabase()
     const contactsCollection = db.collection("contacts")
 

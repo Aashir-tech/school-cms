@@ -59,10 +59,11 @@ export async function POST(request: NextRequest) {
 
     console.log(uploadResult)
 
-    // Send only the secure_url (string)
+    // Send only the secure_url and public_id (string)
     return NextResponse.json({
       success: true,
       url: uploadResult.secure_url,
+      public_id: uploadResult.public_id,
     })
   } catch (error) {
     console.error("Cloudinary Upload Error:", error)
