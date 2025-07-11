@@ -149,7 +149,7 @@ export default function TestimonialsPage() {
             <h1 className="text-3xl font-bold text-gray-900">Testimonials Management</h1>
             <p className="text-gray-600">Manage customer testimonials and reviews</p>
           </div>
-          <Button onClick={() => setShowForm(true)} className="bg-blue-600 hover:bg-blue-700">
+          <Button onClick={() => setShowForm(true)} className="bg-blue-600 hover:bg-blue-700 cursor-pointer">
             <Plus className="h-4 w-4 mr-2" />
             Add Testimonial
           </Button>
@@ -186,11 +186,11 @@ export default function TestimonialsPage() {
                     </div>
                   </div>
                   <div className="flex space-x-1">
-                    <Button size="sm" variant="secondary" onClick={() => handleEdit(testimonial)}>
-                      <Edit className="h-4 w-4" />
+                    <Button size="sm" variant="secondary" className="bg-blue-500" onClick={() => handleEdit(testimonial)}>
+                      <Edit className="h-4 w-4" color="white" />
                     </Button>
-                    <Button size="sm" variant="destructive" onClick={() => handleDelete(testimonial._id)}>
-                      <Trash2 className="h-4 w-4" />
+                    <Button size="sm" variant="destructive" className="bg-red-500" onClick={() => handleDelete(testimonial._id)}>
+                      <Trash2 className="h-4 w-4" color="white" />
                     </Button>
                   </div>
                 </div>
