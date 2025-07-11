@@ -118,13 +118,13 @@ export function AdminHeader() {
         {/* Left side - Search */}
         <div className="flex items-center space-x-4 flex-1">
           {showSearch ? (
-            <div className="relative max-w-md flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <div className="relative max-w-md flex-1 cursor-pointer">
+              <Search className="cursor-pointer absolute left-3 top-1/2 transform -translate-y-1/2 text-black h-4 w-4" />
               <Input
                 placeholder="Search content, events, team members..."
                 value={searchQuery}
                 onChange={handleSearchChange}
-                className="pl-10 pr-10 bg-gray-50 border-gray-200"
+                className="pl-10 pr-10 bg-blue-400 border-blue-200"
                 autoFocus
               />
               <Button
@@ -162,8 +162,8 @@ export function AdminHeader() {
           {/* Notifications */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="relative cursor-pointer">
-                <Bell className="h-5 w-5 " />
+              <Button variant="ghost" size="icon" className="relative cursor-pointer ">
+                <Bell className="h-5 w-5 cursor-pointer" color="black" />
                 {unreadCount > 0 && (
                   <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-red-500">
                     {unreadCount}
@@ -172,15 +172,15 @@ export function AdminHeader() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-80 bg-white cursor-pointer">
-              <div className="flex items-center justify-between px-3 py-2 border-b">
-                <h3 className="font-medium">Notifications</h3>
+              <div className="flex items-center justify-between text-black px-3 py-2 border-b">
+                <h3 className="font-medium">Notifications</h3> 
                 {unreadCount > 0 && (
-                  <Button variant="ghost" size="sm" onClick={handleMarkAllAsRead}>
+                  <Button variant="ghost" size="sm" className="cursor-pointer text-black" onClick={handleMarkAllAsRead}>
                     Mark all as read
                   </Button>
                 )}
               </div>
-              <div className="max-h-96 overflow-y-auto">
+              <div className="max-h-96 overflow-y-auto text-black">
                 {notifications.length > 0 ? (
                   notifications.map((notification) => (
                     <DropdownMenuItem
@@ -220,7 +220,7 @@ export function AdminHeader() {
                 </div>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 bg-white cursor-pointer">
+            <DropdownMenuContent align="end" className="w-56 bg-white text-gray-900 cursor-pointer">
               <div className="px-3 py-2">
                 <p className="text-sm font-medium text-gray-900">{user?.name}</p>
                 <p className="text-xs text-gray-500">{user?.email}</p>

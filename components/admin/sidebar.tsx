@@ -20,6 +20,7 @@ import {
   User,
   ChevronLeft,
   ChevronRight,
+  Images
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { RootState } from "@/redux/store"
@@ -55,6 +56,11 @@ const menuItems = [
     title: "Gallery",
     icon: Camera,
     href: "/admin/gallery",
+  },
+  {
+    title: "Media",
+    icon: Images,
+    href: "/admin/media",
   },
   {
     title: "Testimonials",
@@ -102,7 +108,7 @@ export function AdminSidebar() {
         onClick={handleToggleSidebar}
         className="absolute -right-3 top-6 z-10 bg-white border border-gray-200 shadow-md hover:shadow-lg hover:bg-gray-50"
       >
-        {sidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+        {sidebarCollapsed ? <ChevronRight className="h-4 w-4" color="black" /> : <ChevronLeft className="h-4 w-4" color="black" />}
       </Button>
 
       {/* Logo Section */}

@@ -151,7 +151,7 @@ export function AdminDashboard() {
   return (
     <div className="space-y-6">
       {/* Welcome Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg p-6 text-white">
+      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg p-6">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold">Welcome back, {user?.name}!</h1>
@@ -190,7 +190,7 @@ export function AdminDashboard() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Activity */}
-        <Card className="hover:shadow-lg transition-shadow duration-200">
+        <Card className="hover:shadow-lg transition-shadow duration-200 text-gray-500">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="flex items-center">
               <Activity className="h-5 w-5 mr-2 text-blue-600" />

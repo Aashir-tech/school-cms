@@ -157,20 +157,20 @@ export default function GalleryPage() {
               <div className="relative h-48">
                 <Image src={item.url || "/placeholder.svg"} alt={item.alt} fill className="object-cover" />
                 <div className="absolute top-2 right-2 flex space-x-1">
-                  <Button size="sm" variant="secondary" onClick={() => handleEdit(item)}>
-                    <Edit className="h-4 w-4" />
+                  <Button size="sm" variant="secondary" className="bg-blue-500" onClick={() => handleEdit(item)}>
+                    <Edit className="h-4 w-4" color="white" />
                   </Button>
-                  <Button size="sm" variant="destructive" onClick={() => handleDelete(item._id)}>
-                    <Trash2 className="h-4 w-4" />
+                  <Button size="sm" variant="destructive" className="bg-red-500"  onClick={() => handleDelete(item._id)}>
+                    <Trash2 className="h-4 w-4" color="white"  />
                   </Button>
                 </div>
                 {!item.isActive && (
-                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-white bg-opacity-50 flex items-center justify-center">
                     <EyeOff className="h-8 w-8 text-white" />
                   </div>
                 )}
               </div>
-              <CardContent className="p-4">
+              <CardContent className="p-4 text-black">
                 <h3 className="font-semibold text-lg mb-1">{item.title || item.alt}</h3>
                 {item.description && <p className="text-gray-600 text-sm mb-2">{item.description}</p>}
                 <div className="flex items-center justify-between text-sm">
