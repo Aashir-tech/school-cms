@@ -4,6 +4,8 @@ import dashboardReducer from "./slices/dashboardSlice"
 import cmsReducer from "./slices/cmsSlice"
 import uiReducer from "./slices/uiSlice"
 import publicDataReducer from './slices/publicDataSlice'
+import galleryReducer from "./slices/gallerySlice"
+
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +14,7 @@ export const store = configureStore({
     cms: cmsReducer,
     ui: uiReducer,
     publicData: publicDataReducer,
+    gallery: galleryReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

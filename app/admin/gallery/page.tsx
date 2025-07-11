@@ -198,7 +198,7 @@ export default function GalleryPage() {
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">No gallery items yet</h3>
               <p className="text-gray-600 mb-4">Add your first photo to get started</p>
-              <Button onClick={() => setShowForm(true)}>
+              <Button className="cursor-pointer" onClick={() => setShowForm(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Add Photo
               </Button>
