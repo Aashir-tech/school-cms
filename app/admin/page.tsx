@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation"
 import { useSelector } from "react-redux"
 import type { RootState } from "@/redux/store"
 import { AdminLayout } from "@/components/admin/layout"
-import { AdminDashboard } from "@/components/admin/dashboard"
+import  {AdminDashboard} from "@/components/admin/dashboard"
 import { Spinner } from "@/components/ui/spinner"
 
 export default function AdminPage() {

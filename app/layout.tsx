@@ -26,12 +26,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
         <Suspense fallback={null}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem
-            disableTransitionOnChange
-          >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+
             <Providers>
               <AnalyticsTracker />
               <PublicLayoutWrapper>{children}</PublicLayoutWrapper>

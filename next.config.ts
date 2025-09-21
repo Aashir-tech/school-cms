@@ -18,10 +18,7 @@ const nextConfig : NextConfig = {
       },
     ],
     unoptimized: true,
-  },
-  experimental: {
-    serverComponentsExternalPackages: ['mongodb'],
-  },
+  }
 }
 
 export default nextConfig

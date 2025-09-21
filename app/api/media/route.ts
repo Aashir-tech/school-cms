@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const page = Number.parseInt(searchParams.get("page") || "1")
-    const limit = Number.parseInt(searchParams.get("limit") || "10")
+    const limit = Number.parseInt(searchParams.get("limit") || "20")
     const folder = searchParams.get("folder") || ""
     const resourceType = searchParams.get("resource_type") || "image"
 

@@ -1,12 +1,8 @@
 "use client";
 
-/**
- * Gallery Form Component
- * Form for creating and editing gallery items
- */
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { X } from "lucide-react";
+import { X, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -52,8 +48,7 @@ export function GalleryForm({ item, onSave, onCancel }: GalleryFormProps) {
   const [newCategory, setNewCategory] = useState("");
   const [imageUrl, setImageUrl] = useState(item?.url || "");
   const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
-  const [showCategoryDeleteDialog, setShowCategoryDeleteDialog] =
-    useState(false);
+  const [showCategoryDeleteDialog, setShowCategoryDeleteDialog] = useState(false);
 
   const {
     register,
@@ -87,95 +82,55 @@ export function GalleryForm({ item, onSave, onCancel }: GalleryFormProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-transparent text-gray-900 bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>
+    <div className="fixed inset-0 bg-background/80 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fade-in">
+      <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto relative z-10 bg-card border-border rounded-2xl shadow-2xl animate-scale-in custom-scrollbar">
+        <CardHeader className="flex flex-row items-center justify-between p-6 border-b border-border">
+          <CardTitle className="text-2xl font-bold text-foreground">
             {item ? "Edit Gallery Item" : "Add New Gallery Item"}
           </CardTitle>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="cursor-pointer"
-            onClick={onCancel}
-          >
-            <X className="h-4 w-4" />
+          <Button variant="ghost" size="icon" onClick={onCancel}>
+            <X className="h-5 w-5" />
           </Button>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-6">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {/* Image Upload */}
             <div>
               <Label>Image *</Label>
-              <FileUpload
-                onUpload={setImageUrl}
-                currentImage={imageUrl}
-                className="mt-2"
-              />
-              {!imageUrl && (
-                <p className="text-red-500 text-sm mt-1">Image is required</p>
-              )}
+              <FileUpload onUpload={setImageUrl} currentImage={imageUrl} className="mt-1" />
+              {!imageUrl && <p className="text-sm font-medium text-destructive mt-2">Image is required</p>}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Alt Text */}
               <div>
                 <Label htmlFor="alt">Alt Text *</Label>
                 <Input
                   id="alt"
                   {...register("alt", { required: "Alt text is required" })}
-                  className={errors.alt ? "border-red-500" : ""}
+                  className={`mt-1 ${errors.alt ? "border-destructive focus-visible:ring-destructive" : ""}`}
                   placeholder="Describe the image"
                 />
-                {errors.alt && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.alt.message}
-                  </p>
-                )}
+                {errors.alt && <p className="text-sm font-medium text-destructive mt-1">{errors.alt.message}</p>}
               </div>
-
-              {/* Title */}
               <div>
                 <Label htmlFor="title">Title (Optional)</Label>
-                <Input
-                  id="title"
-                  {...register("title")}
-                  placeholder="Image title"
-                />
+                <Input id="title" {...register("title")} placeholder="Image title" className="mt-1" />
               </div>
             </div>
 
-            {/* Description */}
             <div>
               <Label htmlFor="description">Description (Optional)</Label>
-              <Textarea
-                id="description"
-                {...register("description")}
-                placeholder="Brief description of the image"
-                rows={3}
-              />
+              <Textarea id="description" {...register("description")} placeholder="Brief description of the image" rows={3} className="mt-1" />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Category */}
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="category">Category *</Label>
-                <Select
-                  value={category}
-                  onValueChange={(value) => setValue("category", value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white text-gray-900">
+                <Select value={category} onValueChange={(value) => setValue("category", value)}>
+                  <SelectTrigger><SelectValue placeholder="Select category" /></SelectTrigger>
+                  <SelectContent>
                     {categories.map((cat) => (
-                      <div
-                        key={cat}
-                        className="flex items-center justify-between px-2 py-1 group hover:bg-gray-100 rounded"
-                      >
-                        <SelectItem value={cat} className="flex-1">
-                          {cat}
-                        </SelectItem>
+                      <div key={cat} className="flex items-center justify-between pr-2 group">
+                        <SelectItem value={cat} className="flex-1">{cat}</SelectItem>
                         <Button
                           type="button"
                           size="icon"
@@ -185,7 +140,7 @@ export function GalleryForm({ item, onSave, onCancel }: GalleryFormProps) {
                             setCategoryToDelete(cat);
                             setShowCategoryDeleteDialog(true);
                           }}
-                          className="text-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="h-6 w-6 text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           <X className="h-3 w-3" />
                         </Button>
@@ -193,15 +148,10 @@ export function GalleryForm({ item, onSave, onCancel }: GalleryFormProps) {
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
-
-              {/* Add New Category */}
-              <div className="mt-3">
-                <Label htmlFor="newCategory">Add New Category</Label>
-                <div className="flex gap-2 mt-1">
+                <div className="flex gap-2">
                   <Input
                     id="newCategory"
-                    placeholder="Enter new category"
+                    placeholder="Add new category..."
                     value={newCategory}
                     onChange={(e) => setNewCategory(e.target.value)}
                   />
@@ -214,14 +164,11 @@ export function GalleryForm({ item, onSave, onCancel }: GalleryFormProps) {
                         setNewCategory("");
                       }
                     }}
-                    className="bg-green-600 hover:bg-green-700"
                   >
                     Add
                   </Button>
                 </div>
               </div>
-
-              {/* Order */}
               <div>
                 <Label htmlFor="order">Display Order *</Label>
                 <Input
@@ -232,37 +179,21 @@ export function GalleryForm({ item, onSave, onCancel }: GalleryFormProps) {
                     required: "Order is required",
                     min: { value: 1, message: "Order must be at least 1" },
                   })}
-                  className={errors.order ? "border-red-500" : ""}
+                  className={`mt-1 ${errors.order ? "border-destructive focus-visible:ring-destructive" : ""}`}
                 />
-                {errors.order && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.order.message}
-                  </p>
-                )}
+                {errors.order && <p className="text-sm font-medium text-destructive mt-1">{errors.order.message}</p>}
               </div>
             </div>
 
-            {/* Active Status */}
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="isActive"
-                checked={isActive}
-                onCheckedChange={(checked) => setValue("isActive", checked)}
-                className="data-[state=checked]:bg-blue-600 data-[state=unchecked]:bg-gray-300 cursor-pointer "
-              />
-              <Label htmlFor="isActive" className="cursor-pointer">Active (visible on website)</Label>
+            <div className="flex items-center space-x-3 pt-4 border-t border-border">
+              <Switch id="isActive" checked={isActive} onCheckedChange={(checked) => setValue("isActive", checked)} />
+              <Label htmlFor="isActive">Active (visible on website)</Label>
             </div>
 
-            {/* Form Actions */}
-            <div className="flex justify-end space-x-3 pt-4 border-t">
-              <Button type="button" variant="outline" onClick={onCancel} className="cursor-pointer">
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                disabled={!imageUrl}
-                className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
-              >
+            <div className="flex justify-end space-x-3 pt-6 border-t border-border">
+              <Button type="button" variant="secondary" onClick={onCancel}>Cancel</Button>
+              <Button type="submit" disabled={!imageUrl}>
+                <Save className="h-4 w-4 mr-2" />
                 {item ? "Update Item" : "Create Item"}
               </Button>
             </div>
@@ -283,7 +214,7 @@ export function GalleryForm({ item, onSave, onCancel }: GalleryFormProps) {
           if (categoryToDelete) {
             dispatch(removeCategory(categoryToDelete));
             if (category === categoryToDelete) {
-              setValue("category", categories[0] || "");
+              setValue("category", categories.filter(c => c !== categoryToDelete)[0] || "");
             }
           }
           setCategoryToDelete(null);
@@ -291,6 +222,14 @@ export function GalleryForm({ item, onSave, onCancel }: GalleryFormProps) {
         }}
         variant="destructive"
       />
+       <style jsx global>{`
+        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scale-in { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
+        .animate-scale-in { animation: scale-in 0.3s ease-out forwards; }
+        .custom-scrollbar::-webkit-scrollbar { display: none; }
+        .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
     </div>
   );
 }

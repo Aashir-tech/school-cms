@@ -1,11 +1,6 @@
 "use client"
 
 import type React from "react"
-
-/**
- * Admin Layout Component
- * Main layout wrapper for admin pages
- */
 import { useSelector } from "react-redux"
 import type { RootState } from "@/redux/store"
 import { AdminSidebar } from "./sidebar"
@@ -19,18 +14,19 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   const { sidebarCollapsed } = useSelector((state: RootState) => state.dashboard)
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      {/* Sidebar */}
+    // Use `bg-background` to make the entire layout theme-aware.
+    <div className="flex h-screen bg-background text-foreground">
       <AdminSidebar />
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Header */}
+      <div className="flex flex-col flex-1 overflow-hidden">
         <AdminHeader />
 
-        {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="max-w-7xl mx-auto">{children}</div>
+        {/* The main content area now uses `bg-background`. 
+            Removed padding `p-6` to avoid double-padding, 
+            as page components like the dashboard manage their own padding. */}
+        <main className="flex-1 overflow-y-auto bg-background">
+          {/* The max-w-7xl and mx-auto can be kept here if you want a centered, max-width container for all admin pages */}
+          <div className="max-w-7xl mx-auto p-6">{children}</div>
         </main>
       </div>
     </div>

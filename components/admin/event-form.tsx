@@ -1,12 +1,8 @@
-/**
- * Event Form Component
- * Form for creating and editing events
- */
 "use client"
 
 import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
-import { X } from "lucide-react"
+import { X, Save } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -60,13 +56,11 @@ export function EventForm({ event, onSave, onCancel }: EventFormProps) {
   const isActive = watch("isActive")
   const isFeatured = watch("isFeatured")
 
-  // Update form values when image or content changes
   useEffect(() => {
     setValue("image", image)
     setValue("content", content)
   }, [image, content, setValue])
 
-  // Handle form submission
   const onSubmit = (data: Event) => {
     onSave({
       ...data,
@@ -76,82 +70,70 @@ export function EventForm({ event, onSave, onCancel }: EventFormProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>{event ? "Edit Event" : "Add New Event"}</CardTitle>
+    <div className="fixed inset-0 bg-background/80 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fade-in">
+      <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto relative z-10 bg-card border-border rounded-2xl shadow-2xl animate-scale-in custom-scrollbar">
+        <CardHeader className="flex flex-row items-center justify-between p-6 border-b border-border">
+          <CardTitle className="text-2xl font-bold text-foreground">
+            {event ? "Edit Event" : "Add New Event"}
+          </CardTitle>
           <Button variant="ghost" size="icon" onClick={onCancel}>
-            <X className="h-4 w-4" />
+            <X className="h-5 w-5" />
           </Button>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-6">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Left Column */}
               <div className="space-y-6">
-                {/* Title */}
                 <div>
                   <Label htmlFor="title">Event Title *</Label>
                   <Input
                     id="title"
                     {...register("title", { required: "Title is required" })}
-                    className={errors.title ? "border-red-500" : ""}
+                    className={`mt-1 ${errors.title ? "border-destructive focus-visible:ring-destructive" : ""}`}
                   />
-                  {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
+                  {errors.title && <p className="text-sm font-medium text-destructive mt-1">{errors.title.message}</p>}
                 </div>
 
-                {/* Description */}
                 <div>
                   <Label htmlFor="description">Short Description *</Label>
                   <Textarea
                     id="description"
                     {...register("description", { required: "Description is required" })}
-                    className={errors.description ? "border-red-500" : ""}
+                    className={`mt-1 ${errors.description ? "border-destructive focus-visible:ring-destructive" : ""}`}
                     rows={3}
                   />
-                  {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
+                  {errors.description && <p className="text-sm font-medium text-destructive mt-1">{errors.description.message}</p>}
                 </div>
 
-                {/* Date */}
                 <div>
                   <Label htmlFor="date">Event Date *</Label>
                   <Input
                     id="date"
                     type="date"
                     {...register("date", { required: "Date is required" })}
-                    className={errors.date ? "border-red-500" : ""}
+                    className={`mt-1 ${errors.date ? "border-destructive focus-visible:ring-destructive" : ""}`}
                   />
-                  {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date.message}</p>}
+                  {errors.date && <p className="text-sm font-medium text-destructive mt-1">{errors.date.message}</p>}
                 </div>
 
-                {/* End Date */}
                 <div>
                   <Label htmlFor="endDate">End Date (Optional)</Label>
-                  <Input id="endDate" type="date" {...register("endDate")} />
+                  <Input id="endDate" type="date" {...register("endDate")} className="mt-1" />
                 </div>
 
-                {/* Location */}
                 <div>
                   <Label htmlFor="location">Location (Optional)</Label>
-                  <Input id="location" {...register("location")} placeholder="e.g., School Auditorium" />
+                  <Input id="location" {...register("location")} placeholder="e.g., School Auditorium" className="mt-1" />
                 </div>
 
-                {/* Switches */}
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="isActive"
-                      checked={isActive}
-                      onCheckedChange={(checked) => setValue("isActive", checked)}
-                    />
+                <div className="space-y-4 pt-2">
+                  <div className="flex items-center space-x-3">
+                    <Switch id="isActive" checked={isActive} onCheckedChange={(checked) => setValue("isActive", checked)} />
                     <Label htmlFor="isActive">Active</Label>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="isFeatured"
-                      checked={isFeatured}
-                      onCheckedChange={(checked) => setValue("isFeatured", checked)}
-                    />
+                  <div className="flex items-center space-x-3">
+                    <Switch id="isFeatured" checked={isFeatured} onCheckedChange={(checked) => setValue("isFeatured", checked)} />
                     <Label htmlFor="isFeatured">Featured Event</Label>
                   </div>
                 </div>
@@ -159,32 +141,40 @@ export function EventForm({ event, onSave, onCancel }: EventFormProps) {
 
               {/* Right Column */}
               <div className="space-y-6">
-                {/* Image Upload */}
                 <div>
-                  <Label>Event Image (Optional)</Label>
-                  <FileUpload onUpload={setImage} currentImage={image} className="mt-2" />
+                  <Label htmlFor="event-image">Event Image (Optional)</Label>
+                  <FileUpload onUpload={setImage} currentImage={image} className="mt-1" />
                 </div>
               </div>
             </div>
 
-            {/* Full Width Content Editor */}
             <div>
-              <Label>Detailed Content (Optional)</Label>
-              <div className="mt-2">
-                <RichTextEditor value={content} onChange={setContent} placeholder="Add detailed event information..." />
+              <Label htmlFor="detailed-content">Detailed Content (Optional)</Label>
+              <div className="mt-1">
+                <RichTextEditor value={content} onChange={setContent} placeholder="Add detailed event information..." height="300px" />
               </div>
             </div>
 
-            {/* Form Actions */}
-            <div className="flex justify-end space-x-3 pt-4 border-t">
-              <Button type="button" variant="outline" onClick={onCancel}>
+            <div className="flex justify-end space-x-3 pt-6 border-t border-border">
+              <Button type="button" variant="secondary" onClick={onCancel}>
                 Cancel
               </Button>
-              <Button type="submit">{event ? "Update Event" : "Create Event"}</Button>
+              <Button type="submit">
+                <Save className="h-5 w-5 mr-2" />
+                {event ? "Update Event" : "Create Event"}
+              </Button>
             </div>
           </form>
         </CardContent>
       </Card>
+      <style jsx global>{`
+        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scale-in { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
+        .animate-scale-in { animation: scale-in 0.3s ease-out forwards; }
+        .custom-scrollbar::-webkit-scrollbar { display: none; }
+        .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
     </div>
   )
 }

@@ -31,43 +31,52 @@
 //   }
 // }
 
-
-import { type NextRequest, NextResponse } from "next/server"
-import cloudinary from "@/lib/cloudinary"
+import { type NextRequest, NextResponse } from "next/server";
+import cloudinary from "@/lib/cloudinary";
 
 export async function POST(request: NextRequest) {
   try {
-    const data = await request.formData()
-    const file: File | null = data.get("file") as unknown as File
+    const data = await request.formData();
+    const file: File | null = data.get("file") as unknown as File;
 
     if (!file) {
-      return NextResponse.json({ error: "No file uploaded" }, { status: 400 })
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    const arrayBuffer = await file.arrayBuffer()
-    const buffer = Buffer.from(arrayBuffer)
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    // Generate clean name from file
+    const originalName = file.name.split(".")[0];
+    const fileExt = file.name.split(".").pop();
+    const timestamp = Date.now();
+    const cleanName = originalName
+      .replace(/\s+/g, "-")
+      .replace(/[^a-zA-Z0-9-_]/g, "");
+    const publicId = `school-cms/${cleanName}-${timestamp}`;
 
     const uploadResult: any = await new Promise((resolve, reject) => {
-      cloudinary.uploader.upload_stream(
-        { folder: "school-cms" },
-        (error, result) => {
-          if (error) reject(error)
-          else resolve(result)
-        }
-      ).end(buffer)
-    })
+      cloudinary.uploader
+        .upload_stream(
+          { public_id: publicId, folder: "school-cms" },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        )
+        .end(buffer);
+    });
 
-    console.log(uploadResult)
+    console.log(uploadResult);
 
     // Send only the secure_url and public_id (string)
     return NextResponse.json({
       success: true,
       url: uploadResult.secure_url,
       public_id: uploadResult.public_id,
-    })
+    });
   } catch (error) {
-    console.error("Cloudinary Upload Error:", error)
-    return NextResponse.json({ error: "Upload failed" }, { status: 500 })
+    console.error("Cloudinary Upload Error:", error);
+    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }
-
